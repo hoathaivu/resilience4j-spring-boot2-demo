@@ -43,7 +43,7 @@ public class BackendAService implements Service {
     @CircuitBreaker(name = BACKEND_A)
     @Bulkhead(name = BACKEND_A)
     public String ignoreException() {
-        throw new BusinessException("This exception is ignored by the CircuitBreaker of backend A");
+        throw new BusinessException("This exception should be ignored by the CircuitBreaker of backend A");
     }
 
     @Override
