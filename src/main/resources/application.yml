@@ -29,18 +29,12 @@ resilience4j.circuitbreaker:
         default:
             registerHealthIndicator: true
             slidingWindowSize: 10
-            minimumNumberOfCalls: 5
+            minimumNumberOfCalls: 1 #for quick result
             permittedNumberOfCallsInHalfOpenState: 3
             automaticTransitionFromOpenToHalfOpenEnabled: true
             waitDurationInOpenState: 5s
             failureRateThreshold: 50
             eventConsumerBufferSize: 10
-            recordExceptions:
-                - org.springframework.web.client.HttpServerErrorException
-                - java.util.concurrent.TimeoutException
-                - java.io.IOException
-            ignoreExceptions:
-                - io.github.robwin.exception.BusinessException
         shared:
             slidingWindowSize: 100
             permittedNumberOfCallsInHalfOpenState: 30
@@ -52,6 +46,8 @@ resilience4j.circuitbreaker:
     instances:
         backendA:
             baseConfig: default
+            record-exceptions:
+                - org.springframework.web.client.HttpServerErrorException
         backendB:
             registerHealthIndicator: true
             slidingWindowSize: 10
@@ -117,7 +113,7 @@ resilience4j.ratelimiter:
             limitForPeriod: 6
             limitRefreshPeriod: 500ms
             timeoutDuration: 3s
-            
+
 resilience4j.timelimiter:
     configs:
         default:
